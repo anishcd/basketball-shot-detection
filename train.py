@@ -60,7 +60,12 @@ data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffl
 model = ssdlite320_mobilenet_v3_large(pretrained=False, num_classes=num_classes)
 
 # Specify the training settings
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+if torch.backends.mps.is_available():
+    device = torch.device("mps")
+    print("Training on MPS (M1 GPU)")
+else:
+    device = torch.device("cpu")
+    print("Training on CPU")
 model.to(device)
 model.train()
 params = [p for p in model.parameters() if p.requires_grad]

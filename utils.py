@@ -1,5 +1,3 @@
-import torch
-
 ## A Py-torch based SSD Implementation requires the annotations to be in the following format for each image to be processed:
 ## [class_id, x_{min}, y_{min}, x_{max}, y_{max}], where (x_{min},y_{min}) and (x_{max},y_{max}) are the coordinates of the top-left and bottom-right corners of the bounding boxes, respectively. 
 # Function to convert COCO annotations to SSD format
@@ -48,12 +46,3 @@ def load_annotations(json_path):
     with open(json_path, 'r') as file:
         annotations = json.load(file)
     return annotations
-
-print(torch.cuda.is_available())
-import torch
-if torch.backends.mps.is_available():
-    mps_device = torch.device("mps")
-    x = torch.ones(1, device=mps_device)
-    print (x)
-else:
-    print ("MPS device not found.")
