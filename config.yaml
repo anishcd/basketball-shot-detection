@@ -1,0 +1,24 @@
+# Data paths
+data:
+  train_annotations: data/train/_annotations_train.coco.json
+  valid_annotations: data/valid/_annotations_valid.coco.json
+  test_annotations: data/test/_annotations_test.coco.json
+  train_images: data/train/images
+  valid_images: data/valid/images
+  test_images: data/test/images
+
+# Model architecture
+model:
+  backbone: MobileNetV3  # or VGG16, ResNet50, etc.
+  num_classes: 4  # including background
+
+# Hyperparameters
+hyperparameters:
+  learning_rate: 0.002
+  batch_size: 16
+  epochs: 20
+  momentum: 0.9
+  weight_decay: 0.0005
+
+# Save model
+save_model_path: path/to/save/model
