@@ -29,7 +29,7 @@ The model architecture is based on Faster R-CNN with a ResNet-50 backbone and Fe
 
 The model is trained using Stochastic Gradient Descent (SGD) with a learning rate of 0.0001, momentum of 0.9, and weight decay of 0.0005.
 
-- **Loss Function**: The loss is calculated as a sum of the classification loss and the regression loss for the bounding boxes.
+- **Loss Function**: The model is trained using a multi-task loss, which is a combination of classification loss and regression loss for the bounding boxes. Specifically, log loss is used for classification, and smooth L1 loss is used for bounding box regression.
 - **Backpropagation**: The gradients are backpropagated through the network to update the weights.
 
 ## Configuration
