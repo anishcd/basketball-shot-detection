@@ -9,10 +9,7 @@ The dataset is in COCO format and contains annotations for the following classes
 - Basketball
 - Rim
 
-The dataset is divided into 3 sets for cross-validation after model was trained:
-- Training set
-- Validation set
-- Test set
+The dataset is divided into 3 sets (Training set, Validation Set, Test set) for cross-validation while the model was being trained:
 
 [Link to dataset download in COCO JSON Format](https://universe.roboflow.com/uc-berkely-w210-tracer/tracer-basketball/dataset/3/download)
 
