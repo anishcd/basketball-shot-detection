@@ -1,1 +1,1 @@
-# Basketball Shooting Analysis using Fast R-CNN Object Detection
+# Basketball Shooting Analysis using Faster R-CNN Object Detection Architecture
