@@ -1,48 +1,47 @@
-## A Py-torch based SSD Implementation requires the annotations to be in the following format for each image to be processed:
-## [class_id, x_{min}, y_{min}, x_{max}, y_{max}], where (x_{min},y_{min}) and (x_{max},y_{max}) are the coordinates of the top-left and bottom-right corners of the bounding boxes, respectively. 
-# Function to convert COCO annotations to SSD format
-def coco_to_ssd_annotations(coco_annotations):
-    ssd_annotations = {}
-    
-    # Create a mapping from image ID to file name
-    image_id_to_file_name = {image['id']: image['file_name'] for image in coco_annotations['images']}
-    
-    # Loop through each annotation and convert it
-    for annotation in coco_annotations['annotations']:
-        image_id = annotation['image_id']
-        file_name = image_id_to_file_name[image_id]
-        
-        # Extract bounding box and category ID
-        bbox = annotation['bbox']
-        category_id = annotation['category_id']
-        
-        # Convert COCO bbox format ([x_min, y_min, width, height]) to SSD format ([x_min, y_min, x_max, y_max])
-        x_min, y_min, width, height = bbox
-        x_max = x_min + width
-        y_max = y_min + height
-        
-        # Create the SSD annotation for this object
-        ssd_annotation = [category_id, x_min, y_min, x_max, y_max]
-        
-        # Add this annotation to the list of annotations for this image
-        if file_name not in ssd_annotations:
-            ssd_annotations[file_name] = []
-        ssd_annotations[file_name].append(ssd_annotation)
-    
-    return ssd_annotations
-
 import json
 
-def load_annotations(json_path):
+def load_annotations(json_file):
     """
     Load annotations from a COCO-formatted JSON file.
-    
-    Parameters:
-        json_path (str): Path to the JSON file.
-        
-    Returns:
-        dict: Loaded annotations.
     """
-    with open(json_path, 'r') as file:
-        annotations = json.load(file)
+    with open(json_file, 'r') as f:
+        annotations = json.load(f)
     return annotations
+
+def coco_to_ssd_annotations(coco_annotations):
+    """
+    Convert COCO-format annotations to a list of dictionaries suitable for use with an SSD model.
+    """
+    image_dict = {}
+    ssd_annotations = []
+    
+    for ann in coco_annotations['annotations']:
+        image_id = ann['image_id']
+        bbox = ann['bbox']
+        category_id = ann['category_id']
+        
+        image_info = coco_annotations['images'][image_id]
+        image_file_name = image_info['file_name']
+        
+        if image_file_name not in image_dict:
+            image_dict[image_file_name] = {'annotations': [], 'labels': []}
+        
+        # Convert COCO bbox format [x,y,width,height] to [xmin, ymin, xmax, ymax]
+        xmin, ymin, width, height = bbox
+        xmax = xmin + width
+        ymax = ymin + height
+        ssd_bbox = [xmin, ymin, xmax, ymax]
+        
+        image_dict[image_file_name]['annotations'].append(ssd_bbox)
+        image_dict[image_file_name]['labels'].append(category_id)
+        
+    for image_file_name, data in image_dict.items():
+        ssd_annotations.append({
+            'file_name': image_file_name,
+            'annotations': data['annotations'],
+            'labels': data['labels']
+        })
+        
+    return ssd_annotations
+
+
