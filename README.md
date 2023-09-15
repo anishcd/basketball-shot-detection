@@ -1,4 +1,4 @@
-# Basketball Shooting Analysis using Faster R-CNN Object Detection Architecture
+# Basketball Shooting Analysis using Faster R-CNN Object Detection
 ## Overview
 
 This project aims to detect basketball shots in images/videos and classify them as makes and misses using object detection techniques. Specifically, the project employs the Faster R-CNN architecture with a ResNet-50 backbone and FPN for this purpose. The project is implemented using PyTorch.
