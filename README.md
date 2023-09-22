@@ -47,3 +47,6 @@ The model used was trained using the following hyperparameters:
 - Weight decay: 0.0005
 
 The training script uses early stopping based on validation loss to prevent overfitting.
+
+![Loss Comparison Training](./resources/trainingvvalidationloss.png)
+
